@@ -53,9 +53,9 @@ task apklib(type: Zip) {
     }
 }
 
-artifacts {
-    archives apklib
-}
+//artifacts {
+//    archives apklib
+//}
 
 task sourcesJar(type: Jar) {
     from android.sourceSets.main.java.srcDirs
