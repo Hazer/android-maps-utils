@@ -1,9 +1,11 @@
 apply plugin: 'com.android.library'
-apply plugin: 'maven'
-apply plugin: 'signing'
+apply plugin: 'com.github.dcendents.android-maven'
+//apply plugin: 'maven'
+//apply plugin: 'signing'
 
 archivesBaseName = 'android-maps-utils'
-group = 'com.google.maps.android'
+//group = 'com.google.maps.android'
+group='com.github.Hazer'
 
 dependencies {
     compile 'com.google.android.gms:play-services-maps:9.2.0'
@@ -60,9 +62,9 @@ task sourcesJar(type: Jar) {
     classifier = 'sources'
 }
 
-signing {
-    sign configurations.archives
-}
+//signing {
+//    sign configurations.archives
+//}
 
 if (!hasProperty("sonatypeUsername")) {
     sonatypeUsername = ""
@@ -70,35 +72,35 @@ if (!hasProperty("sonatypeUsername")) {
 if (!hasProperty("sonatypePassword")) {
     sonatypePassword = ""
 }
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
-
-            repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
-                authentication(userName: sonatypeUsername, password: sonatypePassword)
-            }
-            snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
-                authentication(userName: sonatypeUsername, password: sonatypePassword)
-            }
-
-            modifyPom(addFilter('aar') { artifact, file ->
-                artifact.name == 'android-maps-utils'
-            })
-
-            modifyPom(addFilter('apklib') { artifact, file ->
-                artifact.name == 'android-maps-utils-apklib'
-            })
-
-            // There's no official apklib for Google Play services, so we
-            // can't really maintain that dependency for the apklib packaging.
-            pom('apklib').whenConfigured { pom ->
-                pom.dependencies = []
-            }
-        }
-    }
-}
+//
+//uploadArchives {
+//    repositories {
+//        mavenDeployer {
+//            beforeDeployment { MavenDeployment deployment -> signing.signPom(deployment) }
+//
+//            repository(url: 'https://oss.sonatype.org/service/local/staging/deploy/maven2') {
+//                authentication(userName: sonatypeUsername, password: sonatypePassword)
+//            }
+//            snapshotRepository(url: 'https://oss.sonatype.org/content/repositories/snapshots/') {
+//                authentication(userName: sonatypeUsername, password: sonatypePassword)
+//            }
+//
+//            modifyPom(addFilter('aar') { artifact, file ->
+//                artifact.name == 'android-maps-utils'
+//            })
+//
+//            modifyPom(addFilter('apklib') { artifact, file ->
+//                artifact.name == 'android-maps-utils-apklib'
+//            })
+//
+//            // There's no official apklib for Google Play services, so we
+//            // can't really maintain that dependency for the apklib packaging.
+//            pom('apklib').whenConfigured { pom ->
+//                pom.dependencies = []
+//            }
+//        }
+//    }
+//}
 
 def modifyPom(pom) {
     pom.project {
